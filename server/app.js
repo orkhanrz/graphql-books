@@ -1,3 +1,4 @@
+require('dotenv/config')
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
@@ -6,13 +7,12 @@ const schema = require("./schema/schema");
 const cors = require('cors');
 
 const PORT = process.env.PORT || 4000;
+const MONGODB_CONNECTION_URI = process.env.MONGODB_CONNECTION_URI || '';
 
 app.use(cors());
 app.use("/graphql", graphqlHTTP({ schema, graphiql: true }));
 
-mongoose.connect(
-  "mongodb+srv://orkhanrz:Orkhan080198@test.403gfqj.mongodb.net/graphql"
-);
+mongoose.connect(MONGODB_CONNECTION_URI);
 
 mongoose.connection.once('open', (err) => {
     if(err){
